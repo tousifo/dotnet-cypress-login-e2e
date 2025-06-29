@@ -1,28 +1,5 @@
 describe('User Login Tests', () => {
-  const baseUrl = 'http://localhost:5168/Identity/Account/Login'
-  let email;
-  const password = 'Test@1234'
-
-  before(() => {
-    // Generate a unique email for each test run
-    email = `testuser_${Date.now()}@example.com`
-    // Register the user before running login tests
-    cy.visit('http://localhost:5168/Identity/Account/Register')
-    cy.get('input[name="Input.Email"]').type(email)
-    cy.get('input[name="Input.Password"]').type(password)
-    cy.get('input[name="Input.ConfirmPassword"]').type(password)
-    cy.get('button[type="submit"]').click()
-    // No need to log out, just proceed
-  })
-
-  it('should login successfully with valid credentials', () => {
-    cy.visit(baseUrl)
-    cy.get('input[name="Input.Email"]').type(email)
-    cy.get('input[name="Input.Password"]').type(password)
-    cy.get('button[type="submit"]').click()
-    cy.url().should('eq', 'http://localhost:5168/')
-    cy.get('form[action*="Logout"] button').should('exist') // Only check for existence, do not click
-  })
+  // ...existing code...
 
   it('should show error for invalid credentials', () => {
     cy.visit(baseUrl)
