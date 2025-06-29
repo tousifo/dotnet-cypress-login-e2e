@@ -50,11 +50,11 @@ jobs:
       working-directory: LoginApp
 
     - name: Start .NET app
-      run: dotnet run --urls http://localhost:5000 &
+      run: dotnet run --urls http://localhost:5168 &
       working-directory: LoginApp
 
     - name: Wait for app to be ready
-      run: npx wait-on http://localhost:5000
+      run: npx wait-on http://localhost:5168
       working-directory: LoginApp
 
     - name: Run Cypress tests
