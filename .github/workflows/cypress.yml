@@ -41,6 +41,12 @@ jobs:
       run: dotnet build --no-restore --configuration Release
       working-directory: LoginApp
 
+    - name: Install EF Core CLI
+      run: dotnet tool install --global dotnet-ef
+
+    - name: Add EF Core CLI to PATH
+      run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
     - name: Run EF Core migrations
       run: dotnet ef database update
       working-directory: LoginApp
