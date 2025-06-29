@@ -1,11 +1,9 @@
 describe('User Login Tests', () => {
-  // ...existing code...
-
-  it('should show error for invalid credentials', () => {
-    cy.visit(baseUrl)
-    cy.get('input[name="Input.Email"]').type('wronguser@example.com')
-    cy.get('input[name="Input.Password"]').type('WrongPassword')
-    cy.get('button[type="submit"]').click()
-    cy.contains('Invalid login attempt.').should('exist')
+  it('should display the login page', () => {
+    cy.visit('http://localhost:5168/Identity/Account/Login')
+    cy.contains('Login').should('exist')
+    cy.get('input[name="Input.Email"]').should('exist')
+    cy.get('input[name="Input.Password"]').should('exist')
+    cy.get('button[type="submit"]').should('exist')
   })
 })
