@@ -1,0 +1,5 @@
+node_modules/
+bin/
+obj/
+*.db
+.vs/D:\Automated End-to-End Testing of a .NET User Login and Registration System using Cypress

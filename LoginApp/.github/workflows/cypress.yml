@@ -1,0 +1,62 @@
+name: .NET + Cypress CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install .NET dependencies
+      run: dotnet restore
+      working-directory: LoginApp
+
+    - name: Build .NET app
+      run: dotnet build --no-restore --configuration Release
+      working-directory: LoginApp
+
+    - name: Run EF Core migrations
+      run: dotnet ef database update
+      working-directory: LoginApp
+
+    - name: Install npm dependencies
+      run: npm ci
+      working-directory: LoginApp
+
+    - name: Start .NET app
+      run: dotnet run --urls http://localhost:5000 &
+      working-directory: LoginApp
+
+    - name: Wait for app to be ready
+      run: npx wait-on http://localhost:5000
+      working-directory: LoginApp
+
+    - name: Run Cypress tests
+      run: npx cypress run --spec "cypress/e2e/*.cy.js"
+      working-directory: LoginApp
