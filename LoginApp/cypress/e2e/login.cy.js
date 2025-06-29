@@ -21,7 +21,7 @@ describe('User Login Tests', () => {
     cy.get('input[name="Input.Password"]').type(password)
     cy.get('button[type="submit"]').click()
     cy.url().should('eq', 'http://localhost:5168/')
-    cy.get('form[action*="Logout"] button').should('exist')
+    cy.get('form[action*="Logout"] button').should('exist') // Only check for existence, do not click
   })
 
   it('should show error for invalid credentials', () => {
