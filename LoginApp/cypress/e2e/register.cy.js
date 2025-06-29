@@ -9,7 +9,7 @@ describe('User Registration Tests', () => {
     cy.get('input[name="Input.ConfirmPassword"]').type('Test@1234')
     cy.get('button[type="submit"]').click()
     cy.url().should('eq', 'http://localhost:5168/')
-    cy.get('button').contains('Logout').should('exist')
+    cy.get('form[action*="Logout"] button').should('exist')
   })
 
   it('should show validation error for invalid email format', () => {
