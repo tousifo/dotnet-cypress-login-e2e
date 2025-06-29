@@ -20,7 +20,7 @@ describe('User Login Tests', () => {
     cy.get('input[name="Input.Email"]').type(email)
     cy.get('input[name="Input.Password"]').type(password)
     cy.get('button[type="submit"]').click()
-    cy.contains('Logout').should('exist') // Check for 'Logout' after login
+    cy.contains(`Hello ${email}!`).should('exist') // Check for greeting after login
   })
 
   it('should show error for invalid credentials', () => {
